@@ -11,6 +11,15 @@ A reference application can be found at [http://flowspace-bakery.herokuapp.com](
 
 HTTP Auth access: bake / somecookies
 
+Set up docker
+-------------
+
+Run docker-compose
+
+```
+docker-compose up -d
+```
+
 Test Suite
 ----------
 Like most bakeries, Flowspace Bakery has a test suite. The full suite can be run with:
@@ -24,8 +33,9 @@ Requirements
 
 This application requires:
 
-- Ruby 2.6.2
-- PostgreSQL server running on localhost
+- Ruby 2.7.1
+- Docker
+- docker-compose
 
 Similar Projects
 ----------------
