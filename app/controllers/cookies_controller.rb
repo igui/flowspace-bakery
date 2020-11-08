@@ -19,6 +19,9 @@ class CookiesController < ApplicationController
       unless @cookie.valid?
         redirect_to new_oven_cookies_path(@oven), alert: "Can't create cookie"
       else
+        # Bake the cookie in some seconds
+        ::CookieBakerWorker.perform_in(Random.rand(5..20).seconds, @cookie.id)
+        
         redirect_to oven_path(@oven)
       end
     end

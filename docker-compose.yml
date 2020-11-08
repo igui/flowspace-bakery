@@ -1,7 +1,9 @@
 version: '3'
 services:
   mydb:
-    image: postgres
+    image: postgres:13
+    networks:
+      - backend
     environment: 
       POSTGRES_USER: bake
       POSTGRES_PASSWORD: somecookies
@@ -9,6 +11,20 @@ services:
     - db-data:/var/lib/postgresql/data
     ports:
     - 5432:5432
+  redis:
+    image: redis:5.0.6
+    networks:
+      - backend
+    ports:
+      - 6379:6379
+    restart: always
+    volumes:
+      - redis:/data
+
 volumes:
   db-data:
-    driver: local
+  redis:
+
+networks:
+  backend:
+    driver: bridge

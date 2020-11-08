@@ -5,28 +5,37 @@ Flowspace Bakery is an artisanal digital bakery, crafting the finest digital coo
 
 We don't mass produce our cookies in faceless factories. Instead, We bake cookies to order, one at a time.
 
-Reference Application
----------------------
-A reference application can be found at [http://flowspace-bakery.herokuapp.com](http://flowspace-bakery.herokuapp.com)
-
-HTTP Auth access: bake / somecookies
 
 Set up docker
 -------------
 
-Run docker-compose
+Run docker-compose to start the Redis and PostgreSQL containers in the background.
 
+```bash
+$ docker-compose up --detach
 ```
-docker-compose up -d
+
+Running the application
+-----------------------
+
+To run the application we have to start the Rails server and Sidekiq
+
+```bash
+bundle exec rails db:setup
+bundle exec rails server  
+bundle exec sidekiq       # In another terminal
 ```
+
+Then open the browser at http://localhost:3000. HTTP Auth access is: bake / somecookies
 
 Test Suite
 ----------
 Like most bakeries, Flowspace Bakery has a test suite. The full suite can be run with:
 
-``
-$ rspec spec
-``
+```bash
+$ RAILS_ENV=test bundle exec db:create
+$ bundle exec rspec spec
+```
 
 Requirements
 -------------

@@ -79,11 +79,12 @@ describe CookiesController do
       end
 
       context "when a valid oven is supplied" do
-        it "creates a cookie for that oven" do
+        it "creates an unready cookie for that oven" do
           expect {
             the_request
           }.to change{Cookie.count}.by(1)
 
+          expect(Cookie.last.ready).to eq(false)
           expect(Cookie.last.storage).to eq(oven)
         end
 
@@ -95,6 +96,11 @@ describe CookiesController do
         it "assigns valid cookie parameters" do
           the_request
           expect(Cookie.last.fillings).to eq(cookie_params[:fillings])
+        end
+
+        it "calls a worker to make the cookie later" do
+          expect(CookieBakerWorker).to receive(:perform_in)
+          the_request
         end
       end
 
