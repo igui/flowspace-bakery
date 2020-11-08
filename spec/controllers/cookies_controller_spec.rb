@@ -107,6 +107,25 @@ describe CookiesController do
           }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
+
+      context "when a empty filling is provided" do
+        let(:cookie_params) {
+          {
+            fillings: '',
+          }
+        }
+
+        it "creates a cookie for that oven" do
+          expect {
+            the_request
+          }.to_not change{Cookie.count}
+        end
+
+        it "redirects to the oven" do
+          the_request
+          expect(response).to redirect_to new_oven_cookies_path(oven)
+        end
+      end
     end
 
   end
