@@ -14,6 +14,12 @@ feature 'Cooking cookies' do
     click_button 'Mix and bake'
 
     expect(page).to have_content 'Chocolate Chip'
+    expect(page).to_not have_content 'Your Cookie is Ready'
+
+    # When the cookie is baked
+    Cookie.last.update!(ready: true)
+
+    refresh
     expect(page).to have_content 'Your Cookie is Ready'
 
     click_button 'Retrieve Cookie'
@@ -54,6 +60,11 @@ feature 'Cooking cookies' do
       click_link_or_button 'Prepare Cookie'
       fill_in 'Fillings', with: 'Chocolate Chip'
       click_button 'Mix and bake'
+
+      # When the cookie is baked
+      Cookie.last.update!(ready: true)
+
+      refresh
 
       click_button 'Retrieve Cookie'
     end

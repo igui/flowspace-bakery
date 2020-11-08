@@ -11,4 +11,14 @@ describe Cookie do
     it { is_expected.to validate_presence_of(:storage) }
     it { is_expected.to validate_presence_of(:fillings) }
   end
+
+  describe "notifications" do
+    let(:user) { User.create() }
+    let(:cookie) { Cookie.new(fillings: 'Something', ready: false, storage: user) }
+    
+    it 'notifies when ready' do
+      expect(CookieChannel).to receive(:broadcast_ready).with(cookie)
+      cookie.update!(ready: true)
+    end
+  end
 end

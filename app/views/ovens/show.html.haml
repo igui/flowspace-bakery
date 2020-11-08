@@ -4,11 +4,20 @@
   Cookie in oven:
   - if @oven.cookie
     1 cookie with #{@oven.cookie.fillings || "no fillings"}
-    - if @oven.cookie.ready?
+    %span#cookie_status{ style: @oven.cookie.ready ? '' : 'display: none;'}
       (Your Cookie is Ready)
-      = button_to "Retrieve Cookie", empty_oven_path, class: 'button tiny'
+    
+    = button_to("Retrieve Cookie",
+                empty_oven_path,
+                id: 'retrieve_cookie',
+                style: @oven.cookie.ready ? '' : 'display: none;',
+                class: "button tiny")
   - else
     None
+
+  - if @oven.cookie
+    :javascript
+      window.ovenCookieId = #{@oven.cookie.id.to_json};
 
 %br
 
