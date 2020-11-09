@@ -1,5 +1,8 @@
 %h3= @oven.name
 
+= link_to "Prepare Cookie", new_oven_cookies_path(@oven), id: "prepare-cookie", class: 'button visible-for-small'
+= link_to "Prepare Sheet", new_oven_sheets_path(@oven), id: "prepare-sheet", class: 'button visible-for-small'
+
 .cookie-info
   Oven contents:
   - if @oven.cookie
@@ -22,6 +25,8 @@
                 id: 'retrieve_sheet',
                 style: @oven.sheet.ready ? '' : 'display: none;',
                 class: "button tiny")  
+  - else
+    None
 
   - if @oven.cookie
     :javascript
@@ -29,5 +34,5 @@
 
 %br
 
-= link_to "Prepare Cookie", new_oven_cookies_path(@oven), class: 'button'
-= link_to "Prepare Sheet", new_oven_sheets_path(@oven), class: 'button'
+= link_to "Prepare Cookie", new_oven_cookies_path(@oven), class: 'button visible-for-medium-up'
+= link_to "Prepare Sheet", new_oven_sheets_path(@oven), class: 'button visible-for-medium-up'
