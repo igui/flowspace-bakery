@@ -1,9 +1,9 @@
 %h3= @oven.name
 
 .cookie-info
-  Cookie in oven:
+  Oven contents:
   - if @oven.cookie
-    1 cookie with #{@oven.cookie.fillings || "no fillings"}
+    1 cookie with #{@oven.cookie.fillings}
     %span#cookie_status{ style: @oven.cookie.ready ? '' : 'display: none;'}
       (Your Cookie is Ready)
     
@@ -12,8 +12,16 @@
                 id: 'retrieve_cookie',
                 style: @oven.cookie.ready ? '' : 'display: none;',
                 class: "button tiny")
-  - else
-    None
+  - elsif @oven.sheet
+    #{@oven.sheet.quantity} cookies with #{@oven.sheet.fillings}
+    %span#sheet_status{ style: @oven.sheet.ready ? '' : 'display: none;'}
+      (Your Cookies are Ready)
+    
+    = button_to("Retrieve Cookies",
+                empty_oven_path,
+                id: 'retrieve_sheet',
+                style: @oven.sheet.ready ? '' : 'display: none;',
+                class: "button tiny")  
 
   - if @oven.cookie
     :javascript
@@ -22,3 +30,4 @@
 %br
 
 = link_to "Prepare Cookie", new_oven_cookies_path(@oven), class: 'button'
+= link_to "Prepare Sheet", new_oven_sheets_path(@oven), class: 'button'
